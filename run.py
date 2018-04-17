@@ -2,10 +2,11 @@
 # -*- coding: utf-8 -*-
 
 import requests
-from PisivCrawler import PixivLogin, Crawler
+from PixivCrawler import PixivLogin, Crawler
 
 if __name__ == "__main__":
     session_obj = requests.Session()
+    
     spider = PixivLogin(session_obj)
     if spider.is_already_login():
         print('user already login.')
@@ -17,6 +18,7 @@ if __name__ == "__main__":
         else:
             print("login false.")
             exit()
+    
     c = Crawler(session_obj)
     while(True):
         c.get_image()

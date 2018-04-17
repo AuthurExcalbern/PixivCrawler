@@ -12,7 +12,7 @@ import re
 from PIL import Image
 from io import BytesIO
 
-from PisivCrawler.login import PixivLogin
+from PixivCrawler.login import PixivLogin
 
 
 class Crawler(object):
@@ -35,19 +35,15 @@ class Crawler(object):
                             "Referer": ""}
     
     def save_image(self, original_image_url, save_file):
-        if original_image_url == []:
-            return False
         image = self.session_obj.get(original_image_url.strip())
         
         image_path = self.save_path + "/" + save_file
         if (os.path.exists(image_path)):
-            print("image already exists")
-            return False
+            return
         
         i = image.content
         with open(image_path, 'wb') as f:
             f.write(i)
-        return True
     
     def get_image(self):
         if not (os.path.exists(self.save_path)):
@@ -70,8 +66,7 @@ class Crawler(object):
             print("No find image")
             return
         
-        sucess = 0
-        false = 0
+        thread_stack = []
         miss = 0
         for i in image_id:
             self.cnt += 1
@@ -84,14 +79,16 @@ class Crawler(object):
             
             self.session_obj.headers = self.headers
             
-            print(original_image_url)
-            
             if original_image_url == []:
                 print("url miss")
                 miss += 1
             else:
-                if not self.save_image(original_image_url[0], self.save_name + "%d" % self.cnt):
-                    false += 1
-                else:
-                    sucess += 1
-        print("sucess:" + "%d" % sucess + "  false:" + "%d" % false + "  url miss:" + "%d" % miss)
+                print("Download: " + original_image_url[0])
+                download_thread = threading.Thread(target=self.save_image, args=(original_image_url[0], self.save_name + i))
+                download_thread.start() #self.save_image(original_image_url[0], self.save_name + i)
+                thread_stack.append(download_thread)
+        
+        for i in thread_stack:
+            i.join()
+        
+        print("url miss:" + "%d" % miss)
