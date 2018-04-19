@@ -5,12 +5,7 @@ import os
 import time
 import threading
 import requests
-from urllib import request, error
-from multiprocessing import Process, Queue
 import re
-
-from PIL import Image
-from io import BytesIO
 
 from PixivCrawler.login import PixivLogin
 

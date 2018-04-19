@@ -5,15 +5,16 @@ import requests
 from PixivCrawler import PixivLogin, Crawler
 
 if __name__ == "__main__":
+    
     session_obj = requests.Session()
     
-    spider = PixivLogin(session_obj)
-    if spider.is_already_login():
+    crawler = PixivLogin(session_obj)
+    if crawler.is_already_login():
         print('user already login.')
     else:
         account = input('Input your user name:\n> ')
         password = input('Input your password\n> ')
-        if spider.login(account, password):
+        if crawler.login(account, password):
             print("login sucess.")
         else:
             print("login false.")

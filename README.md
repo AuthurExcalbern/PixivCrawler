@@ -11,7 +11,7 @@ Pixiv is a good webside. I get many great images from Pixiv. But No batch downlo
 - Use cookies to remember your username and password.
 
 ## Future
-- Use `multiprocessing` or `threading` to increase of efficiency.
+- Add GUI.
 
 ## Use
 - Use `python3 run.py` to start.
