@@ -69,9 +69,13 @@ class Crawler(object):
             self.headers['Referer'] = "http://www.pixiv.net/member_illust.php?mode=manga_big&illust_id=" + i + "&page=0"
             
             image_html = self.session_obj.get(image_midium_url, params=self.image_params)
-            image_pattern = re.compile(r'class="wrapper".+?data-src="(.+?)"')
+            image_pattern = re.compile(r'"original":"(.+?)"')
             original_image_url = image_pattern.findall(image_html.text)
             
+
+            original_image_url[0] = original_image_url[0].replace('\\','')
+            
+
             self.session_obj.headers = self.headers
             
             if original_image_url == []:
