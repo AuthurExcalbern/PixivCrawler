@@ -74,7 +74,10 @@ class Crawler(object):
             
 
             original_image_url[0] = original_image_url[0].replace('\\','')
-            
+            if original_image_url[0].find('jpg') != -1:
+                image_type = 'jpg'
+            else:
+                image_type = 'png'
 
             self.session_obj.headers = self.headers
             
@@ -83,7 +86,7 @@ class Crawler(object):
                 miss += 1
             else:
                 print("Download: " + original_image_url[0])
-                download_thread = threading.Thread(target=self.save_image, args=(original_image_url[0], self.save_name + i))
+                download_thread = threading.Thread(target=self.save_image, args=(original_image_url[0], self.save_name + i + '.' + image_type))
                 download_thread.start() #self.save_image(original_image_url[0], self.save_name + i)
                 thread_stack.append(download_thread)
         

@@ -1,5 +1,7 @@
 # PixivCrawler
 
+**If you want to use PixivCrawler, you should be able to access pixiv normally.**
+
 [Pixiv][wiki-pixiv]  is a Japanese online community for artists.
 
 I have seen the [robots.txt][pixiv-robots] of Pixiv. But it has nothing. If you know angthing about it, welcome to `issue` or send email to me.
